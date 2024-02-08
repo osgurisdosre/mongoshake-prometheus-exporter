@@ -1,11 +1,15 @@
 # MongoShake Prometheus Exporter
+[![build](https://github.com/osgurisdosre/mongoshake-prometheus-exporter/actions/workflows/mongoshake-prometheus-exporter.yml/badge.svg)](https://github.com/osgurisdosre/mongoshake-prometheus-exporter/actions/workflows/mongoshake-prometheus-exporter.yml)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-The Prometheus Exporter is an essential tool for administrators and developers working with the MongoDB ecosystem, especially those using [Alibaba's MongoShake](https://github.com/alibaba/MongoShake) for data replication. This exporter is a Python application designed to collect vital metrics from MongoShake, a universal data replication platform based on MongoDB's oplog known for its redundant and active-active replication capabilities.<br>
-![dataflow](resources/dataflow.png)<br>
+The Prometheus Exporter is an essential tool for administrators and developers working with the MongoDB ecosystem, especially those using [Alibaba's MongoShake](https://github.com/alibaba/MongoShake) for data replication. This exporter is a Python application designed to collect vital metrics from MongoShake, a universal data replication platform based on MongoDB's oplog known for its redundant and active-active replication capabilities.
 
 ## Functionality
 
-MongoShake Prometheus Exporter operates by observing and collecting operational data from MongoShake, which are exported by default at the endpoint `http://mongoshake.url:9100/repl`, transforming them into understandable and accessible metrics through Prometheus. This allows users to gain real-time insights into MongoShake performance, such as data transfer rate, latency, and overall replication process health.
+MongoShake Prometheus Exporter operates by observing and collecting operational data from MongoShake, which are exported by default at the endpoint `http://mongoshake.url:9100/repl`, transforming them into understandable and accessible metrics through Prometheus. This allows users to gain real-time insights into MongoShake performance, such as data transfer rate, latency, and overall replication process health.<br>
+<p align="center">
+  <img src="resources/dataflow.png" alt="dataflow">
+</p><br>
 
 ## Requirements
 
@@ -130,7 +134,8 @@ mongoshake_replication_latency{replset="mongoshake-shard-0",url="http://host.doc
 
 Note that the metrics are now being exported in Prometheus format, where a servicemonitor will be able to perform the scraping.
 
-#### Contributions
+### Contributions
+
 Contributions are welcome! If you wish to contribute, please:
 - Fork the repository;
 
