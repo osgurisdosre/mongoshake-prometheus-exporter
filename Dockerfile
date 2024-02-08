@@ -6,10 +6,10 @@ WORKDIR /app
 
 # Copia os arquivos necessários para o diretório de trabalho
 COPY requirements.txt .
-COPY app.py .
+COPY . .
 
 # Instala as dependências necessárias
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Define o comando a ser executado quando o container for iniciado
-CMD ["python3", "app.py"]
+CMD ["python3", "src/app.py"]
