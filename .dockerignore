@@ -1,0 +1,12 @@
+dist
+.env*
+*.log
+.dockerignore
+Dockerfile
+docker-compose.yml
+.git
+.gitignore
+.vscode
+.history
+*.md
+.github
