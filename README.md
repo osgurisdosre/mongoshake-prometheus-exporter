@@ -35,8 +35,8 @@ More information about the metrics that Alibaba MongoShake exports on its endpoi
 
 To use the MongoShake Prometheus Exporter, attention must be paid to two mandatory environment variables:
 
-- `URL_LIST`: A list of URLs to be queried by the MongoShake Prometheus Exporter including the access port and path.
-- `SCRAPE_INTERVAL`: The time interval at which the MongoShake Prometheus Exporter will query the URLs.
+- `MONGOSHAKE_SCRAPE_URL`: A list of URLs to be queried by the MongoShake Prometheus Exporter including the access port and path.
+- `MONGOSHAKE_SCRAPE_INTERVAL`: The time interval at which the MongoShake Prometheus Exporter will query the URLs.
 
 ### Example
 
@@ -97,7 +97,7 @@ docker pull ghcr.io/osgurisdosre/mongoshake-prometheus-exporter:main
 
 Run:
 ```bash
-docker run -p 8000:8000 -p 9100:9100 -p 9200:9200 -e SCRAPE_INTERVAL="5" -e URL_LIST="http://host.docker.internal:9100/repl,http://host.docker.internal:9200/repl" ghcr.io/osgurisdosre/mongoshake-prometheus-exporter:main
+docker run -p 8000:8000 -p 9100:9100 -p 9200:9200 -e MONGOSHAKE_SCRAPE_INTERVAL="5" -e MONGOSHAKE_SCRAPE_URL="http://host.docker.internal:9100/repl,http://host.docker.internal:9200/repl" ghcr.io/osgurisdosre/mongoshake-prometheus-exporter:main
 ```
 
 In the command above, we are exporting ports `9100` and `9200` to the container in addition to port `8000` from the container to the host. In this case, as we want the container to interpret the `URL` locallhost from the host and not the container, we use the following host.docker.internal.
