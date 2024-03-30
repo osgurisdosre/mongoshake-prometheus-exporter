@@ -11,9 +11,9 @@ prometheus_client.REGISTRY.unregister(prometheus_client.PLATFORM_COLLECTOR)
 prometheus_client.REGISTRY.unregister(prometheus_client.GC_COLLECTOR)
 
 # List of URLs to scrape
-URL_LIST=os.environ["URL_LIST"].split(",")
+MONGOSHAKE_SCRAPE_URL=os.environ.get("MONGOSHAKE_SCRAPE_URL", "http://localhost:9100/repl").split(',')
 # Scrape interval
-SCRAPE_INTERVAL=int(os.environ["SCRAPE_INTERVAL"])
+MONGOSHAKE_SCRAPE_INTERVAL=int(os.environ.get("MONGOSHAKE_SCRAPE_INTERVAL", 10))
 
 # Prometheus metric names
 metric_prefix = "mongoshake"
@@ -27,13 +27,16 @@ prom_metrics = {
 
 # Fetch url data
 async def fetch_metrics(url, prom_metrics):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url, headers={"Accept": "application/json"}) as response:
-            if response.status == 200:
-                data = await response.json(content_type=None)
-                update_prometheus_metrics(data, prom_metrics, url)
-            else:
-                print(f"Failed to fetch data from {url}: {response.status}")
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers={"Accept": "application/json"}) as response:
+                if response.status == 200:
+                    data = await response.json(content_type=None)
+                    update_prometheus_metrics(data, prom_metrics, url)
+                else:
+                    print(f"Failed to fetch data from {url}: {response.status}")
+    except Exception as err:
+        print(err, url)
 
 # Print metrics in webserver 
 def update_prometheus_metrics(data, prom_metrics, url):
@@ -55,10 +58,10 @@ async def main():
 
     # Start app
     while True:
-        await asyncio.gather(*[fetch_metrics(url, prom_metrics) for url in URL_LIST])
+        await asyncio.gather(*[fetch_metrics(url, prom_metrics) for url in MONGOSHAKE_SCRAPE_URL])
 
         # Wait for 5 scrape interval
-        await asyncio.sleep(SCRAPE_INTERVAL)
+        await asyncio.sleep(MONGOSHAKE_SCRAPE_INTERVAL)
 
 if __name__ == "__main__":
     try:
